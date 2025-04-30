@@ -6,52 +6,56 @@ import Icon from "@/components/ui/Icon";
 
 interface HeaderProps {
   activePage?: string;
+
+interface HeaderProps {
+  activePage?: "home" | "portfolio" | "services" | "contacts";
 }
 
-const Header: React.FC<HeaderProps> = ({ activePage }) => {
+const Header: React.FC<HeaderProps> = ({ activePage = "home" }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isMobile = useMobile();
+
+  const menuItems = [
+    { title: "Главная", href: "/" },
+    { title: "Портфолио", href: "/portfolio" },
+    { title: "Услуги", href: "/services" },
+    { title: "Контакты", href: "/contacts" },
+  ];
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-sm shadow-sm">
-      <div className="container flex items-center justify-between h-16 px-4 md:px-6">
-        <Link to="/" className="flex items-center gap-2">
-          <Icon name="Sofa" size={28} className="text-wood-medium" />
-          <span className="text-xl font-semibold text-wood-dark">МебельПро</span>
-        </Link>
-        
-        <nav className="hidden md:flex gap-6">
-          <Link 
-            to="/" 
-            className={`text-sm font-medium transition-colors hover:text-primary ${activePage === 'home' ? 'text-primary border-b-2 border-primary pb-1' : 'text-wood-dark'}`}
-          >
-            Главная
+    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex justify-between items-center py-4">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2">
+            <img
+              src="/logo-b.svg"
+              alt="Logo"
+              className="h-8 w-auto"
+            />
+            <span className="font-bold text-lg text-wood-dark">Мебель на заказ</span>
           </Link>
-          <Link 
-            to="/portfolio" 
-            className={`text-sm font-medium transition-colors hover:text-primary ${activePage === 'portfolio' ? 'text-primary border-b-2 border-primary pb-1' : 'text-wood-dark'}`}
-          >
-            Портфолио
-          </Link>
-          <Link 
-            to="/services" 
-            className={`text-sm font-medium transition-colors hover:text-primary ${activePage === 'services' ? 'text-primary border-b-2 border-primary pb-1' : 'text-wood-dark'}`}
-          >
-            Услуги
-          </Link>
-          <Link 
-            to="/contacts" 
-            className={`text-sm font-medium transition-colors hover:text-primary ${activePage === 'contacts' ? 'text-primary border-b-2 border-primary pb-1' : 'text-wood-dark'}`}
-          >
-            Контакты
-          </Link>
-        </nav>
-        
-        <div className="flex items-center gap-4">
-          <Button variant="default" size="sm" className="rounded-full bg-wood-medium hover:bg-wood-dark">
-            <Icon name="Phone" size={16} />
-            <span className="hidden sm:inline">Заказать звонок</span>
-          </Button>
-          
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <Icon name="Menu" />
+
+          {/* Desktop Navigation */}
+          {!isMobile && (
+            <nav className="hidden md:flex space-x-6">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.title}
+                  to={item.href}
+                  className={`text-sm font-medium transition-colors ${
+                    (activePage === "home" && item.href === "/") ||
+                    (activePage !== "home" && item.href.includes(activePage))
+                      ? "text-wood-dark"
+                      : "text-gray-600 hover:text-wood-medium"
+                  }`}
+                >
+                  {item.title}
+                </Link>
+              ))}
+            </nav>
+          )}
+
             <span className="sr-only">Меню</span>
           </Button>
         </div>

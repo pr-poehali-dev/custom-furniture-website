@@ -1,6 +1,8 @@
 
 import React from "react";
+import Icon from "@/components/ui/Icon";
 import { Link } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
 import Icon from "@/components/ui/Icon";
 

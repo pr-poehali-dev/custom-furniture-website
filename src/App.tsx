@@ -15,16 +15,17 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
+
           <Route path="/" element={<Index />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="/portfolio" element={<NotFound />} />
-          <Route path="/services" element={<NotFound />} />
-          <Route path="/contacts" element={<NotFound />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/services" element={<Services />} />
           <Route path="/kitchen" element={<NotFound />} />
           <Route path="/living-room" element={<NotFound />} />
           <Route path="/bathroom" element={<NotFound />} />
+          <Route path="/contacts" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
+
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
